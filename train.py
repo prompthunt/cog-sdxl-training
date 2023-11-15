@@ -14,10 +14,6 @@ Wrapper around actual trainer.
 OUTPUT_DIR = "training_out"
 
 
-class TrainingOutput(BaseModel):
-    weights: Path
-
-
 from typing import Tuple
 
 
@@ -119,7 +115,7 @@ def train(
         default="infer",
         choices=["zip", "tar", "infer"],
     ),
-) -> TrainingOutput:
+) -> Path:
     # Hard-code token_map for now. Make it configurable once we support multiple concepts or user-uploaded caption csv.
     token_map = token_string + ":2"
 
@@ -194,4 +190,4 @@ def train(
             arcname = file_path.relative_to(directory)
             tar.add(file_path, arcname=arcname)
 
-    return TrainingOutput(weights=Path(out_path))
+    return Path(out_path)
